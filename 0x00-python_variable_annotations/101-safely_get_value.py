@@ -1,4 +1,4 @@
-#!/usr/bin/env pyhon3
+#!/usr/bin/env python3
 """Adding type annotations to the function"""
 from typing import Union, Any, Mapping, TypeVar
 
