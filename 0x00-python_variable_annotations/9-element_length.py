@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Annotate the below function parameters"""
 from typing import List, Iterable, Sequence, Tuple
 
