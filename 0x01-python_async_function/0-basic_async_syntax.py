@@ -17,6 +17,7 @@ async def wait_random(max_delay=10):
 
 async def main():
     max_delay = 5
+    max_delay = 15
     result = await wait_random(max_delay)
 
 asyncio.run(main())
