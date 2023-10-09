@@ -12,7 +12,7 @@ from asyncio import run, gather
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-async def wait_n(n: int, max_delay: int) -> float:
+async def wait_n(n: int, max_delay: int) -> List[float]:
     """Takes in 2 int arguments and return
     the list of all the delays (float values)"""
     delays: List[float] = await gather(*(
