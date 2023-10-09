@@ -14,9 +14,9 @@ async def wait_random(max_delay=10):
     await asyncio.sleep(delay)
     return delay
 
+
 async def main():
     max_delay = 5
     result = await wait_random(max_delay)
-    print(f"Waited for {result:.2f} seconds")
 
 asyncio.run(main())
