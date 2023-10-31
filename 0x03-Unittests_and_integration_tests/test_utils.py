@@ -23,6 +23,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a", "b"), 2),
     ])
     def test_access_nested_map(self, nested_map, path, expected_result):
+        """Tests that the method returns what it is supposed to."""
         self.assertEqual(access_nested_map(nested_map, path), expected_result)
 
     @parameterized.expand([
@@ -34,6 +35,8 @@ class TestAccessNestedMap(unittest.TestCase):
     ])
     def test_access_nested_map_exception(
             self, nested_map, path, expected_exception_message):
+        """Use the assertRaises context manager to test that a KeyError is
+        raised"""
         with self.assertRaises(KeyError) as context:
             access_nested_map(nested_map, path)
         self.assertEqual(str(context.exception), expected_exception_message)
@@ -47,6 +50,7 @@ class TestGetJson(unittest.TestCase):
         ("http://holberton.io", {"payload": False}),
     ])
     def test_get_json(self, test_url, test_payload):
+        """Tests that utils.get_json returns the expected result."""
         with patch('utils.requests.get') as mock_get:
             mock_response = Mock()
             mock_response.json.return_value = test_payload
@@ -70,6 +74,9 @@ class TestMemoize(unittest.TestCase):
             return self.a_method()
 
     def test_memoize(self):
+        """Tests that when calling a_property twice, the correct result
+        is returned but a_method is only called once
+        using assert_called_once."""
         test_instance = self.TestClass()
 
         with patch.object(
@@ -78,8 +85,8 @@ class TestMemoize(unittest.TestCase):
             r2 = test_instance.a_property()
 
             mock_a_method.assert_called_once()
-            self.assertEqual(result1, 42)
-            self.assertEqual(result2, 42)
+            self.assertEqual(r1, 42)
+            self.assertEqual(r2, 42)
 
 
 if __name__ == "__main__":
