@@ -8,8 +8,33 @@ from parameterized import parameterized
 from client import GithubOrgClient
 
 
+@parameterized_class(
+        "org_payload", "repos_payload", "expected_repos", "apache2_repos", [
+            org_payload, repos_payload, expected_repos, apache2_repos])
 class TestGithubOrgClient(unittest.TestCase):
     """Defines the class above and implements the test_org method."""
+    @classmethod
+    def setUpClass(cls):
+        cls.get_patcher = patch('requests.get')
+
+        cls.mock_get = cls.get_patcher.start()
+        cls.mock_get.side_effect = [
+                cls.org_payload,
+                cls.repos_payload,
+                cls.expected_repos,
+                cls.apache2_repos
+                ]
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        github_client = GithubOrgClient('testorg')
+        repos = github_client.public_repos()
+
+        self.assertEqual(repos, self.expected_repos)
+
     @parameterized.expand([
         ("google",),
         ("abc",),
@@ -63,7 +88,6 @@ class TestGithubOrgClient(unittest.TestCase):
                 "https://api.github.com/orgs/testorg/repos")
 
         self.assertEqual(repos, expected_payload)
-
 
     @parameterized.expand([
         ({"license": {"key": "my_license"}}, "my_license", True),
